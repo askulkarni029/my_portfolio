@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhijit Kulkarni | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">Abhijit Kulkarni</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <span class="hero-greeting">Hi, I'm</span>
+      <h1 class="hero-name">Abhijit Kulkarni</h1>
+      <p class="hero-role">Full Stack Developer &amp; Designer</p>
+      <p class="hero-bio">
+        I build clean, fast, and user-friendly web applications.
+        Passionate about turning ideas into real digital products.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <div class="avatar-ring">
+        <div class="avatar-placeholder">👨‍💻</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">Technologies I work with</p>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <span class="skill-icon">🌐</span>
+          <span class="skill-name">HTML &amp; CSS</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⚡</span>
+          <span class="skill-name">JavaScript</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⚛️</span>
+          <span class="skill-name">React</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🔥</span>
+          <span class="skill-name">Firebase</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🟢</span>
+          <span class="skill-name">Node.js</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🐍</span>
+          <span class="skill-name">Python</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🗄️</span>
+          <span class="skill-name">SQL</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🐙</span>
+          <span class="skill-name">Git &amp; GitHub</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">Things I've built</p>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-img" style="background: linear-gradient(135deg,#667eea,#764ba2)">
+            <span class="project-emoji">🛒</span>
+          </div>
+          <div class="project-info">
+            <h3>Project One</h3>
+            <p>A short description of what this project does and the problem it solves.</p>
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Firebase</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-ghost">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-img" style="background: linear-gradient(135deg,#f093fb,#f5576c)">
+            <span class="project-emoji">📊</span>
+          </div>
+          <div class="project-info">
+            <h3>Project Two</h3>
+            <p>A short description of what this project does and the problem it solves.</p>
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-ghost">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-img" style="background: linear-gradient(135deg,#4facfe,#00f2fe)">
+            <span class="project-emoji">🤖</span>
+          </div>
+          <div class="project-info">
+            <h3>Project Three</h3>
+            <p>A short description of what this project does and the problem it solves.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">API</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-ghost">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Let's work together</p>
+      <div class="contact-wrapper">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Your message..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="submitBtn">Send Message</button>
+          <p class="form-status" id="formStatus"></p>
+        </form>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <a href="mailto:askulkarni029@gmail.com">askulkarni029@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">🐙</span>
+            <a href="https://github.com" target="_blank">github.com/yourusername</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💼</span>
+            <a href="https://linkedin.com" target="_blank">linkedin.com/in/yourusername</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Built with ❤️ using HTML, CSS, JS &amp; Firebase</p>
+  </footer>
+
+  <!-- Firebase SDK via CDN -->
+  <script type="module" src="firebase.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
