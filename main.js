@@ -154,37 +154,37 @@ const fallbackExperience = [
     role: 'AI Automation Engineer',
     company: 'Shreeji Aqua Treatment Pvt. Ltd.',
     duration: 'Apr 2026 – Present',
-    description: 'Designing and implementing AI-powered automation solutions combining UiPath RPA and Generative AI technologies; developing intelligent workflows integrating LLMs, AI Agents, APIs, and enterprise systems; building autonomous automation processes using n8n, Make, and agentic orchestration frameworks; creating AI-enhanced document processing solutions using OCR, Document Understanding, and GenAI models.',
+    description: 'AI Agents, LLM integration, n8n workflows, GenAI, and intelligent business automation.',
   },
   {
     role: 'Intelligent Automation Specialist',
     company: 'Pradisys Technologies',
     duration: 'Jul 2025 – Dec 2025',
-    description: 'Built scalable UiPath ReFramework automations with reusable components and exception handling; automated Excel, web, and email processes including data entry, reporting, form submissions, classification, and loan-processing tasks; executed web scraping, RegEx/Document Understanding PDF extraction, and designed AI-driven, human-in-loop workflows using AI Center & Action Center.',
+    description: 'RPA, OCR, Document Understanding, APIs, and enterprise automation.',
   },
   {
     role: 'Automation Engineer',
     company: 'RG Electrical Services',
     duration: 'Jun 2023 – Nov 2025',
-    description: 'Automated solar performance data collection from portals, dashboards, weather sources, and Excel using UiPath/Power Automate, improving data accuracy and eliminating manual monitoring; built reusable automation components and real-time detection workflows for underperforming solar panels, improving forecasting and reporting accuracy.',
+    description: 'Workflow automation, energy reporting, monitoring, and process optimization.',
   },
   {
     role: 'Operations Specialist',
     company: 'Peppermint Robotics',
     duration: 'Oct 2021 – Nov 2022',
-    description: 'Managed and executed operations, preventive maintenance, and technical support for Peppermint Robots customers; led robot deployments and demos, including programming, training, and team management; worked hands-on with ROS, Linux, Python, path planning, LiDAR, and image processing.',
+    description: 'Robotics deployment, ROS, Linux, IoT, sensors, preventive maintenance, and customer support.',
   },
   {
     role: 'Engineering Trainee',
     company: 'Wikas Printing and Carriers Private Limited',
     duration: 'May 2019 – Aug 2020',
-    description: 'Assisted senior engineers in setting up and operating industrial printing machines, diagnosing misalignment and mechanical issues, and maintaining daily production and maintenance reports.',
+    description: 'Printing systems, production support, machine maintenance, and quality processes.',
   },
   {
     role: 'Building Management Systems Engineer',
     company: 'Tenon Group',
     duration: 'Sep 2018 – Mar 2019',
-    description: 'Installed, configured, and maintained BMS components including HVAC controls, sensors, and energy-monitoring devices; monitored dashboards and optimized control settings to improve energy performance and equipment reliability.',
+    description: 'Building automation, HVAC controls, diagnostics, and technical documentation.',
   },
 ];
 
