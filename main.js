@@ -67,12 +67,60 @@ function escapeHtml(str) {
 }
 
 // ── Dynamic Projects ──
+// Static fallback so real projects show even before any are added via admin.html/Firestore.
+// Anything added in the admin panel will take priority over this list automatically.
+const fallbackProjects = [
+  {
+    emoji: '📦',
+    title: 'Agentic AI CRM — AI-Powered Inventory Management',
+    description: 'AI-driven inventory management system that automates stock tracking, categorization, and reorder decisions using LLMs and OpenAI GPT, with real-time monitoring, predictive alerts, and automated reporting.',
+    tags: ['LLM', 'OpenAI GPT', 'AI Automation', 'Inventory Management'],
+    liveUrl: 'https://agentic-ai-crm.vercel.app',
+    githubUrl: 'https://github.com/askulkarni029/agentic_ai_crm',
+  },
+  {
+    emoji: '🏠',
+    title: 'Real Estate Web Scraping Automation Bot',
+    description: 'UiPath RPA bot that scrapes real estate listings from Zillow by city, extracting prices, beds, baths, area, and addresses, calculating price per sq ft, and exporting clean results to Excel.',
+    tags: ['UiPath', 'RPA', 'Web Scraping', 'Data Extraction'],
+    githubUrl: 'https://github.com/askulkarni029/Real-Estate-Web-Scraping-Automation-Bot',
+  },
+  {
+    emoji: '🌦️',
+    title: 'WeatherWear Advisor Bot',
+    description: 'UiPath RPA solution that fetches live weather data from Google and recommends suitable clothing based on predefined rules, showcasing UI automation, selectors, and decision-making logic.',
+    tags: ['UiPath', 'RPA', 'Automation', 'Decision Logic'],
+    githubUrl: 'https://github.com/askulkarni029/WeatherWear-Advisor-Bot',
+  },
+  {
+    emoji: '🤖',
+    title: 'AI-Robot Warehouse Simulator',
+    description: 'AI-generated robotics simulation depicting autonomous warehouse intralogistics, a robot transporting and shelving packages, produced entirely with AI image and video generation.',
+    tags: ['AI Video Generation', 'Robotics Simulation', 'Prompt Engineering'],
+    githubUrl: 'https://github.com/askulkarni029/AI-Robot-Warehouse-Simulator',
+  },
+  {
+    emoji: '💧',
+    title: 'Journey of Wastewater — ETP/STP & PCB Compliance',
+    description: 'A visual explainer project using AI-generated imagery and voiceover to demonstrate industrial wastewater treatment (ETP/STP) and Pollution Control Board compliance.',
+    tags: ['AI Visual Explainer', 'Environmental Compliance', 'Infographic'],
+    githubUrl: 'https://github.com/askulkarni029/Journey-of-Wastewater-ETP-STP-and-PCB-Compliance.',
+  },
+  {
+    emoji: '📝',
+    title: 'Technical Content Project — Help Center Documentation',
+    description: 'AI-assisted technical writing workflow producing a multi-level approval workflow help center article, covering prompt design, draft analysis, and human validation of AI-generated content.',
+    tags: ['Technical Writing', 'AI-Assisted Content', 'Documentation'],
+    githubUrl: 'https://github.com/askulkarni029/Technical-Content-Project',
+  },
+];
+
 async function renderProjects() {
   const grid = document.getElementById('projectsGrid');
   if (!grid || !window.PortfolioData) return;
   try {
-    const projects = await window.PortfolioData.fetchProjects();
-    if (!projects.length) return; // keep the static "Coming Soon" fallback card
+    const fetched = await window.PortfolioData.fetchProjects();
+    const projects = fetched.length ? fetched : fallbackProjects;
 
     grid.innerHTML = projects.map(p => `
       <div class="project-card">
