@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Abhijit Kulkarni Portfolio</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN -->
+  <section id="loginView" class="admin-login">
+    <form id="loginForm" class="admin-login-box">
+      <h1>Admin Login</h1>
+      <p class="admin-login-sub">Sign in to manage your portfolio</p>
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="loginBtn">Sign In</button>
+      <p class="form-status" id="loginStatus"></p>
+    </form>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboardView" class="admin-dashboard" hidden>
+    <nav class="admin-nav">
+      <div class="nav-logo">Admin Console</div>
+      <div class="admin-nav-right">
+        <a href="index.html" class="btn btn-sm btn-ghost" target="_blank">View Site ↗</a>
+        <button id="logoutBtn" class="btn btn-sm btn-outline">Log Out</button>
+      </div>
+    </nav>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="projects">Projects</button>
+      <button class="admin-tab" data-tab="experience">Experience</button>
+      <button class="admin-tab" data-tab="testimonials">Testimonials</button>
+      <button class="admin-tab" data-tab="messages">Messages</button>
+    </div>
+
+    <div class="admin-content container">
+
+      <!-- PROJECTS PANEL -->
+      <div class="admin-panel active" id="panel-projects">
+        <form class="admin-form" id="projectForm">
+          <input type="hidden" id="projectId" />
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label for="projectTitle">Title</label>
+              <input type="text" id="projectTitle" required />
+            </div>
+            <div class="form-group">
+              <label for="projectEmoji">Emoji</label>
+              <input type="text" id="projectEmoji" placeholder="🚀" maxlength="4" />
+            </div>
+            <div class="form-group">
+              <label for="projectOrder">Order</label>
+              <input type="number" id="projectOrder" value="0" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="projectDescription">Description</label>
+            <textarea id="projectDescription" rows="3" required></textarea>
+          </div>
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label for="projectTags">Tags (comma separated)</label>
+              <input type="text" id="projectTags" placeholder="AI, Automation, n8n" />
+            </div>
+            <div class="form-group">
+              <label for="projectLive">Live Demo URL</label>
+              <input type="url" id="projectLive" placeholder="https://..." />
+            </div>
+            <div class="form-group">
+              <label for="projectGithub">GitHub URL</label>
+              <input type="url" id="projectGithub" placeholder="https://github.com/..." />
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button type="submit" class="btn btn-primary" id="projectSubmitBtn">Add Project</button>
+            <button type="button" class="btn btn-ghost" id="projectCancelBtn" hidden>Cancel Edit</button>
+          </div>
+        </form>
+        <div class="admin-list" id="projectsList"></div>
+      </div>
+
+      <!-- EXPERIENCE PANEL -->
+      <div class="admin-panel" id="panel-experience">
+        <form class="admin-form" id="experienceForm">
+          <input type="hidden" id="experienceId" />
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label for="experienceRole">Role</label>
+              <input type="text" id="experienceRole" required />
+            </div>
+            <div class="form-group">
+              <label for="experienceCompany">Company</label>
+              <input type="text" id="experienceCompany" required />
+            </div>
+            <div class="form-group">
+              <label for="experienceDuration">Duration</label>
+              <input type="text" id="experienceDuration" placeholder="Jan 2024 - Present" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="experienceDescription">Description</label>
+            <textarea id="experienceDescription" rows="3"></textarea>
+          </div>
+          <div class="form-group" style="max-width:160px;">
+            <label for="experienceOrder">Order</label>
+            <input type="number" id="experienceOrder" value="0" />
+          </div>
+          <div class="admin-form-actions">
+            <button type="submit" class="btn btn-primary" id="experienceSubmitBtn">Add Experience</button>
+            <button type="button" class="btn btn-ghost" id="experienceCancelBtn" hidden>Cancel Edit</button>
+          </div>
+        </form>
+        <div class="admin-list" id="experienceList2"></div>
+      </div>
+
+      <!-- TESTIMONIALS PANEL -->
+      <div class="admin-panel" id="panel-testimonials">
+        <form class="admin-form" id="testimonialForm">
+          <input type="hidden" id="testimonialId" />
+          <div class="admin-form-grid">
+            <div class="form-group">
+              <label for="testimonialName">Name</label>
+              <input type="text" id="testimonialName" required />
+            </div>
+            <div class="form-group">
+              <label for="testimonialRole">Role / Company</label>
+              <input type="text" id="testimonialRole" />
+            </div>
+            <div class="form-group">
+              <label for="testimonialAvatar">Avatar (emoji)</label>
+              <input type="text" id="testimonialAvatar" placeholder="🧑" maxlength="4" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="testimonialText">Testimonial</label>
+            <textarea id="testimonialText" rows="3" required></textarea>
+          </div>
+          <div class="form-group" style="max-width:160px;">
+            <label for="testimonialOrder">Order</label>
+            <input type="number" id="testimonialOrder" value="0" />
+          </div>
+          <div class="admin-form-actions">
+            <button type="submit" class="btn btn-primary" id="testimonialSubmitBtn">Add Testimonial</button>
+            <button type="button" class="btn btn-ghost" id="testimonialCancelBtn" hidden>Cancel Edit</button>
+          </div>
+        </form>
+        <div class="admin-list" id="testimonialsList"></div>
+      </div>
+
+      <!-- MESSAGES PANEL -->
+      <div class="admin-panel" id="panel-messages">
+        <p class="section-sub" style="margin-bottom:1.5rem;">Messages submitted through the contact form</p>
+        <div class="admin-list" id="messagesList"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+.admin-body { background: var(--bg); }
+
+/* ── LOGIN ── */
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.admin-login-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-login-box h1 { font-size: 1.4rem; font-weight: 800; }
+.admin-login-sub { color: var(--muted); font-size: 0.875rem; margin-top: -0.75rem; }
+
+/* ── DASHBOARD NAV ── */
+.admin-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-nav-right { display: flex; gap: 0.75rem; align-items: center; }
+
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.admin-tab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-tab:hover { color: var(--text); }
+
+.admin-tab.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.admin-content { padding: 2rem; }
+
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+/* ── FORM ── */
+.admin-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.admin-form-actions { display: flex; gap: 0.75rem; }
+
+/* ── LIST ── */
+.admin-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.admin-list-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-list-item-main h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+.admin-list-item-main p { font-size: 0.8rem; color: var(--muted); }
+.admin-list-item-main .meta { color: var(--primary); font-weight: 600; }
+
+.admin-list-item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+.admin-empty { color: var(--muted); font-size: 0.9rem; text-align: center; padding: 2rem 0; }
+
+@media (max-width: 640px) {
+  .admin-nav { padding: 1rem; }
+  .admin-tabs { padding: 1rem 1rem 0; }
+  .admin-content { padding: 1rem; }
+  .admin-list-item { flex-direction: column; }
+}

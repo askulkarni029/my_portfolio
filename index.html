@@ -17,6 +17,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -99,12 +100,23 @@
     </div>
   </section>
 
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <p class="section-sub">Where I've worked</p>
+      <div class="experience-list" id="experienceList">
+        <p class="empty-note">Experience coming soon.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- PROJECTS -->
   <section class="section section-alt" id="projects">
     <div class="container">
       <h2 class="section-title">Projects</h2>
       <p class="section-sub">Things I've built</p>
-      <div class="projects-grid">
+      <div class="projects-grid" id="projectsGrid">
 
         <div class="project-card coming-soon-card">
           <div class="project-img coming-soon-img">
@@ -124,43 +136,16 @@
           </div>
         </div>
 
-        <div class="project-card coming-soon-card">
-          <div class="project-img coming-soon-img">
-            <div class="coming-soon-badge">Coming Soon</div>
-            <span class="project-emoji">💡</span>
-          </div>
-          <div class="project-info">
-            <h3>Project Coming Soon</h3>
-            <p>Something exciting is in the works. Stay tuned!</p>
-            <div class="project-tags">
-              <span class="tag tag-muted">TBA</span>
-            </div>
-            <div class="project-links">
-              <span class="btn btn-sm btn-locked" title="Not available yet">Live Demo</span>
-              <span class="btn btn-sm btn-ghost btn-locked" title="Not available yet">GitHub</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card coming-soon-card">
-          <div class="project-img coming-soon-img">
-            <div class="coming-soon-badge">Coming Soon</div>
-            <span class="project-emoji">🛠️</span>
-          </div>
-          <div class="project-info">
-            <h3>Project Coming Soon</h3>
-            <p>Something exciting is in the works. Stay tuned!</p>
-            <div class="project-tags">
-              <span class="tag tag-muted">TBA</span>
-            </div>
-            <div class="project-links">
-              <span class="btn btn-sm btn-locked" title="Not available yet">Live Demo</span>
-              <span class="btn btn-sm btn-ghost btn-locked" title="Not available yet">GitHub</span>
-            </div>
-          </div>
-        </div>
-
       </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <h2 class="section-title">Testimonials</h2>
+      <p class="section-sub">What people say</p>
+      <div class="testimonials-grid" id="testimonialsGrid"></div>
     </div>
   </section>
 
@@ -219,6 +204,6 @@
 
   <!-- Firebase SDK via CDN -->
   <script type="module" src="firebase.js"></script>
-  <script src="main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

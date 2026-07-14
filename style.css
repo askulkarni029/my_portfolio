@@ -281,6 +281,89 @@ body {
 
 .project-links { display: flex; gap: 0.5rem; }
 
+/* ── EXPERIENCE ── */
+.empty-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.experience-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+}
+
+.experience-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.experience-header h3 { font-size: 1.05rem; font-weight: 700; }
+
+.experience-duration {
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.experience-company {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.experience-desc {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.testimonial-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.testimonial-text {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.testimonial-avatar { font-size: 1.75rem; }
+.testimonial-name { font-size: 0.9rem; font-weight: 700; }
+.testimonial-role { font-size: 0.8rem; color: var(--muted); }
+
 /* ── CONTACT ── */
 .contact-wrapper {
   display: grid;
