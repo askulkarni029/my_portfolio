@@ -147,12 +147,47 @@ async function renderProjects() {
 }
 
 // ── Dynamic Experience ──
+// Static fallback so real experience shows even before any are added via admin.html/Firestore.
+// Anything added in the admin panel will take priority over this list automatically.
+const fallbackExperience = [
+  {
+    role: 'RPA Developer Intern',
+    company: 'ePradisys Technologies',
+    duration: '07/2025 – 12/2025',
+    description: 'Built scalable UiPath ReFramework automations with reusable components and exception handling; automated Excel, web, and email processes including data entry, reporting, and loan-processing tasks; executed web scraping and Document Understanding PDF extraction, and designed AI-driven, human-in-loop workflows using AI Center & Action Center.',
+  },
+  {
+    role: 'Jr. Electrical Engineer',
+    company: 'RG Electricals and Services',
+    duration: '06/2023 – 12/2024',
+    description: 'Managed daily work planning, manpower coordination, and safety compliance for structured field operations; installed, wired, and commissioned electrical components and sensors for cleaning robots and AMRs, including STM32-based control systems, motors, and battery management modules.',
+  },
+  {
+    role: 'Operation Engineer',
+    company: 'Aubotz Peppermint Labs Pvt. Ltd.',
+    duration: '10/2021 – 11/2022',
+    description: 'Led robot deployments and demos for Peppermint service robots, including installation, configuration, programming, and team training; worked hands-on with ROS, Linux, Python, path planning, LiDAR, sensors, and image processing.',
+  },
+  {
+    role: 'Trainee Engineer',
+    company: 'Wikas Pvt Ltd',
+    duration: '05/2019 – 08/2020',
+    description: 'Assisted senior engineers in setting up and operating industrial printing machines, diagnosing misalignment and mechanical issues, and maintaining daily production and maintenance reports.',
+  },
+  {
+    role: 'BMS Engineer',
+    company: 'Tenon FM',
+    duration: '09/2018 – 03/2019',
+    description: 'Installed, configured, and maintained Building Management System components including HVAC controls, sensors, and energy-monitoring devices; monitored dashboards and optimized control settings to improve energy performance and equipment reliability.',
+  },
+];
+
 async function renderExperience() {
   const list = document.getElementById('experienceList');
   if (!list || !window.PortfolioData) return;
   try {
-    const items = await window.PortfolioData.fetchExperience();
-    if (!items.length) return; // keep "Experience coming soon" fallback
+    const fetched = await window.PortfolioData.fetchExperience();
+    const items = fetched.length ? fetched : fallbackExperience;
 
     list.innerHTML = items.map(e => `
       <div class="experience-item">
