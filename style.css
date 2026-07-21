@@ -234,6 +234,41 @@ body {
 .skill-icon { font-size: 1.8rem; }
 .skill-name { font-size: 0.85rem; font-weight: 600; text-align: center; }
 
+/* ── TOOLS ── */
+.tools-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tools-category-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.tools-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.tool-tag {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: transform 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.tool-tag:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
 /* ── PROJECTS ── */
 .projects-grid {
   display: grid;
