@@ -143,6 +143,7 @@ const fallbackProjects = [
     title: 'Journey of Wastewater — ETP/STP & PCB Compliance',
     description: 'A visual explainer project using AI-generated imagery and voiceover to demonstrate industrial wastewater treatment (ETP/STP) and Pollution Control Board compliance.',
     tags: ['AI Visual Explainer', 'Environmental Compliance', 'Infographic'],
+    videoUrl: 'media/wastewater-etp-stp-demo.mp4',
     githubUrl: 'https://github.com/askulkarni029/Journey-of-Wastewater-ETP-STP-and-PCB-Compliance.',
   },
   {
