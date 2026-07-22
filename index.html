@@ -65,57 +65,59 @@
       <h2 class="section-title">Skills</h2>
       <p class="section-sub">What I Do</p>
       <div class="skills-grid">
-        <div class="skill-card">
-          <span class="skill-icon">💬</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Design structured prompts that generate accurate, creative, and business-focused AI responses across multiple LLMs.">
+          <span class="skill-icon">🤖</span>
           <span class="skill-name">Prompt Engineering</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">⚙️</span>
-          <span class="skill-name">AI Automation Workflows</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Leverage tools like ChatGPT, Claude, Gemini, and Google AI Studio to solve business problems and boost productivity.">
+          <span class="skill-icon">💬</span>
+          <span class="skill-name">Generative AI</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">🤖</span>
-          <span class="skill-name">AI Agent Development</span>
-        </div>
-        <div class="skill-card">
+        <div class="skill-card" tabindex="0" role="button" data-desc="Create high-quality blogs, social media posts, presentations, emails, images, and videos using Generative AI.">
           <span class="skill-icon">✍️</span>
           <span class="skill-name">AI Content Creation</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">🔗</span>
-          <span class="skill-name">LLM Integration</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Use AI to streamline content marketing, campaign planning, branding, and customer engagement for business growth.">
+          <span class="skill-icon">📈</span>
+          <span class="skill-name">AI Marketing</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">📚</span>
-          <span class="skill-name">RAG Applications</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Build AI-powered workflows that automate repetitive tasks and improve operational efficiency.">
+          <span class="skill-icon">⚡</span>
+          <span class="skill-name">AI Workflow Automation</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" tabindex="0" role="button" data-desc="Develop practical AI agents using ChatGPT Custom GPTs, Claude Projects, and Gemini for business automation.">
+          <span class="skill-icon">🧠</span>
+          <span class="skill-name">AI Agent Development</span>
+        </div>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Design AI solutions that simplify reporting, documentation, research, and everyday business operations.">
+          <span class="skill-icon">📊</span>
+          <span class="skill-name">Business AI Solutions</span>
+        </div>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Connect AI tools and business applications using n8n and no-code automation platforms to create seamless workflows.">
           <span class="skill-icon">🔄</span>
-          <span class="skill-name">N8N Automation</span>
+          <span class="skill-name">No-Code AI Automation</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">🦾</span>
-          <span class="skill-name">UiPath RPA</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Produce AI-generated images, videos, presentations, and creative assets for marketing and branding.">
+          <span class="skill-icon">🎬</span>
+          <span class="skill-name">AI Media Creation</span>
         </div>
-        <div class="skill-card">
-          <span class="skill-icon">🐍</span>
-          <span class="skill-name">Python</span>
-        </div>
-        <div class="skill-card">
-          <span class="skill-icon">🗄️</span>
-          <span class="skill-name">SQL</span>
-        </div>
-        <div class="skill-card">
-          <span class="skill-icon">🦜</span>
-          <span class="skill-name">LangChain &amp; LangGraph</span>
-        </div>
-        <div class="skill-card">
-          <span class="skill-icon">🎨</span>
-          <span class="skill-name">Gen AI Media (DALL·E, SORA, Veo)</span>
+        <div class="skill-card" tabindex="0" role="button" data-desc="Apply foundational UiPath and process automation knowledge to support enterprise workflow optimization.">
+          <span class="skill-icon">⚙️</span>
+          <span class="skill-name">Enterprise Automation</span>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- SKILL DETAIL MODAL -->
+  <div class="skill-modal-overlay" id="skillModalOverlay">
+    <div class="skill-modal" role="dialog" aria-modal="true" aria-labelledby="skillModalTitle">
+      <button class="skill-modal-close" id="skillModalClose" aria-label="Close">&times;</button>
+      <span class="skill-modal-icon" id="skillModalIcon"></span>
+      <h3 class="skill-modal-title" id="skillModalTitle"></h3>
+      <p class="skill-modal-desc" id="skillModalDesc"></p>
+    </div>
+  </div>
 
   <!-- TOOLS -->
   <section class="section section-alt" id="tools">
@@ -227,6 +229,14 @@
       </div>
     </div>
   </section>
+
+  <!-- PROJECT VIDEO MODAL -->
+  <div class="video-modal-overlay" id="videoModalOverlay">
+    <div class="video-modal">
+      <button class="video-modal-close" id="videoModalClose" aria-label="Close">&times;</button>
+      <video id="videoModalPlayer" controls playsinline></video>
+    </div>
+  </div>
 
   <!-- TESTIMONIALS -->
   <section class="section" id="testimonials">

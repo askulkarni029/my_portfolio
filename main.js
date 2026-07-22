@@ -60,6 +60,42 @@ function observeFadeIns(selector) {
 
 observeFadeIns('.skill-card, .section-title');
 
+// ── Skill detail modal ──
+const skillOverlay     = document.getElementById('skillModalOverlay');
+const skillModalIcon   = document.getElementById('skillModalIcon');
+const skillModalTitle  = document.getElementById('skillModalTitle');
+const skillModalDesc   = document.getElementById('skillModalDesc');
+const skillModalClose  = document.getElementById('skillModalClose');
+
+function openSkillModal(card) {
+  skillModalIcon.textContent  = card.querySelector('.skill-icon')?.textContent || '';
+  skillModalTitle.textContent = card.querySelector('.skill-name')?.textContent || '';
+  skillModalDesc.textContent  = card.dataset.desc || '';
+  skillOverlay.classList.add('active');
+}
+
+function closeSkillModal() {
+  skillOverlay.classList.remove('active');
+}
+
+document.querySelectorAll('.skill-card').forEach(card => {
+  card.addEventListener('click', () => openSkillModal(card));
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openSkillModal(card);
+    }
+  });
+});
+
+skillModalClose.addEventListener('click', closeSkillModal);
+skillOverlay.addEventListener('click', (e) => {
+  if (e.target === skillOverlay) closeSkillModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSkillModal();
+});
+
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str ?? '';
@@ -83,6 +119,7 @@ const fallbackProjects = [
     title: 'Real Estate Web Scraping Automation Bot',
     description: 'UiPath RPA bot that scrapes real estate listings from Zillow by city, extracting prices, beds, baths, area, and addresses, calculating price per sq ft, and exporting clean results to Excel.',
     tags: ['UiPath', 'RPA', 'Web Scraping', 'Data Extraction'],
+    videoUrl: 'media/real-estate-scraping-demo.mp4',
     githubUrl: 'https://github.com/askulkarni029/Real-Estate-Web-Scraping-Automation-Bot',
   },
   {
@@ -135,12 +172,17 @@ async function renderProjects() {
           </div>
           <div class="project-links">
             ${p.liveUrl ? `<a href="${escapeHtml(p.liveUrl)}" target="_blank" class="btn btn-sm">Live Demo</a>` : ''}
+            ${p.videoUrl ? `<button type="button" class="btn btn-sm btn-video" data-video="${escapeHtml(p.videoUrl)}">▶ Watch Demo</button>` : ''}
             ${p.githubUrl ? `<a href="${escapeHtml(p.githubUrl)}" target="_blank" class="btn btn-sm btn-ghost">GitHub</a>` : ''}
           </div>
         </div>
       </div>
     `).join('');
     observeFadeIns('#projectsGrid .project-card');
+
+    grid.querySelectorAll('.btn-video').forEach(btn => {
+      btn.addEventListener('click', () => openVideoModal(btn.dataset.video));
+    });
   } catch (err) {
     console.error('Failed to load projects', err);
   }
@@ -239,6 +281,36 @@ async function renderTestimonials() {
     console.error('Failed to load testimonials', err);
   }
 }
+
+// ── Project video modal ──
+const videoOverlay = document.getElementById('videoModalOverlay');
+const videoPlayer   = document.getElementById('videoModalPlayer');
+const videoClose    = document.getElementById('videoModalClose');
+
+function openVideoModal(src) {
+  if (!videoOverlay || !videoPlayer) return;
+  videoPlayer.src = src;
+  videoOverlay.classList.add('active');
+  videoPlayer.play().catch(() => {});
+}
+
+function closeVideoModal() {
+  if (!videoOverlay || !videoPlayer) return;
+  videoPlayer.pause();
+  videoPlayer.removeAttribute('src');
+  videoPlayer.load();
+  videoOverlay.classList.remove('active');
+}
+
+if (videoClose) videoClose.addEventListener('click', closeVideoModal);
+if (videoOverlay) {
+  videoOverlay.addEventListener('click', (e) => {
+    if (e.target === videoOverlay) closeVideoModal();
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeVideoModal();
+});
 
 renderProjects();
 renderExperience();

@@ -20,6 +20,7 @@ try {
     $req  = $ctx.Request
     $resp = $ctx.Response
 
+    try {
     $urlPath = $req.Url.LocalPath.TrimStart('/')
     if ($urlPath -eq '' -or $urlPath -eq '/') { $urlPath = 'index.html' }
 
@@ -36,19 +37,55 @@ try {
         '.jpg'  { 'image/jpeg' }
         '.svg'  { 'image/svg+xml' }
         '.ico'  { 'image/x-icon' }
+        '.mp4'  { 'video/mp4' }
+        '.webm' { 'video/webm' }
         default { 'application/octet-stream' }
       }
-      $bytes = [System.IO.File]::ReadAllBytes($filePath)
-      $resp.ContentType   = $mime
-      $resp.ContentLength64 = $bytes.Length
-      $resp.OutputStream.Write($bytes, 0, $bytes.Length)
+
+      $fileLength = (Get-Item $filePath).Length
+      $rangeHeader = $req.Headers['Range']
+
+      if ($rangeHeader -and $rangeHeader -match 'bytes=(\d*)-(\d*)') {
+        $start = if ($matches[1]) { [int64]$matches[1] } else { 0 }
+        $end   = if ($matches[2]) { [int64]$matches[2] } else { $fileLength - 1 }
+        $end   = [Math]::Min($end, $fileLength - 1)
+        $chunkLength = $end - $start + 1
+
+        $resp.StatusCode = 206
+        $resp.ContentType = $mime
+        $resp.Headers.Add('Accept-Ranges', 'bytes')
+        $resp.Headers.Add('Content-Range', "bytes $start-$end/$fileLength")
+        $resp.ContentLength64 = $chunkLength
+
+        $stream = [System.IO.File]::OpenRead($filePath)
+        $stream.Seek($start, [System.IO.SeekOrigin]::Begin) | Out-Null
+        $buffer = New-Object byte[] 65536
+        $remaining = $chunkLength
+        while ($remaining -gt 0) {
+          $toRead = [Math]::Min($buffer.Length, $remaining)
+          $read = $stream.Read($buffer, 0, $toRead)
+          if ($read -le 0) { break }
+          $resp.OutputStream.Write($buffer, 0, $read)
+          $remaining -= $read
+        }
+        $stream.Close()
+      } else {
+        $resp.ContentType   = $mime
+        $resp.Headers.Add('Accept-Ranges', 'bytes')
+        $resp.ContentLength64 = $fileLength
+        $bytes = [System.IO.File]::ReadAllBytes($filePath)
+        $resp.OutputStream.Write($bytes, 0, $bytes.Length)
+      }
     } else {
       $resp.StatusCode = 404
       $body = [System.Text.Encoding]::UTF8.GetBytes("404 Not Found")
       $resp.OutputStream.Write($body, 0, $body.Length)
     }
-
-    $resp.OutputStream.Close()
+    } catch {
+      # Client disconnected mid-response or another per-request error — skip it, keep the server alive
+    } finally {
+      $resp.OutputStream.Close()
+    }
   }
 } finally {
   $listener.Stop()
