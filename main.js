@@ -127,6 +127,7 @@ const fallbackProjects = [
     title: 'WeatherWear Advisor Bot',
     description: 'UiPath RPA solution that fetches live weather data from Google and recommends suitable clothing based on predefined rules, showcasing UI automation, selectors, and decision-making logic.',
     tags: ['UiPath', 'RPA', 'Automation', 'Decision Logic'],
+    videoUrl: 'media/weather-advisor-demo.mp4',
     githubUrl: 'https://github.com/askulkarni029/WeatherWear-Advisor-Bot',
   },
   {
