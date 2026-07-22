@@ -153,39 +153,50 @@ const fallbackProjects = [
   },
 ];
 
-async function renderProjects() {
+function renderProjectCards(projects) {
   const grid = document.getElementById('projectsGrid');
-  if (!grid || !window.PortfolioData) return;
-  try {
-    const fetched = await window.PortfolioData.fetchProjects();
-    const projects = fetched.length ? fetched : fallbackProjects;
+  if (!grid) return;
 
-    grid.innerHTML = projects.map(p => `
-      <div class="project-card">
-        <div class="project-img">
-          <span class="project-emoji">${escapeHtml(p.emoji || '💻')}</span>
+  grid.innerHTML = projects.map(p => `
+    <div class="project-card">
+      <div class="project-img">
+        <span class="project-emoji">${escapeHtml(p.emoji || '💻')}</span>
+      </div>
+      <div class="project-info">
+        <h3>${escapeHtml(p.title)}</h3>
+        <p>${escapeHtml(p.description)}</p>
+        <div class="project-tags">
+          ${(p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
         </div>
-        <div class="project-info">
-          <h3>${escapeHtml(p.title)}</h3>
-          <p>${escapeHtml(p.description)}</p>
-          <div class="project-tags">
-            ${(p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}
-          </div>
-          <div class="project-links">
-            ${p.liveUrl ? `<a href="${escapeHtml(p.liveUrl)}" target="_blank" class="btn btn-sm">Live Demo</a>` : ''}
-            ${p.videoUrl ? `<button type="button" class="btn btn-sm btn-video" data-video="${escapeHtml(p.videoUrl)}">▶ Watch Demo</button>` : ''}
-            ${p.githubUrl ? `<a href="${escapeHtml(p.githubUrl)}" target="_blank" class="btn btn-sm btn-ghost">GitHub</a>` : ''}
-          </div>
+        <div class="project-links">
+          ${p.liveUrl ? `<a href="${escapeHtml(p.liveUrl)}" target="_blank" class="btn btn-sm">Live Demo</a>` : ''}
+          ${p.videoUrl ? `<button type="button" class="btn btn-sm btn-video" data-video="${escapeHtml(p.videoUrl)}">▶ Watch Demo</button>` : ''}
+          ${p.githubUrl ? `<a href="${escapeHtml(p.githubUrl)}" target="_blank" class="btn btn-sm btn-ghost">GitHub</a>` : ''}
         </div>
       </div>
-    `).join('');
-    observeFadeIns('#projectsGrid .project-card');
+    </div>
+  `).join('');
+  observeFadeIns('#projectsGrid .project-card');
 
-    grid.querySelectorAll('.btn-video').forEach(btn => {
-      btn.addEventListener('click', () => openVideoModal(btn.dataset.video));
-    });
+  grid.querySelectorAll('.btn-video').forEach(btn => {
+    btn.addEventListener('click', () => openVideoModal(btn.dataset.video));
+  });
+}
+
+async function renderProjects() {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
+
+  // Render the known-good fallback list immediately so the section is never
+  // blank while Firestore loads (or if it fails/hangs silently).
+  renderProjectCards(fallbackProjects);
+
+  if (!window.PortfolioData) return;
+  try {
+    const fetched = await window.PortfolioData.fetchProjects();
+    if (fetched.length) renderProjectCards(fetched);
   } catch (err) {
-    console.error('Failed to load projects', err);
+    console.error('Failed to load projects from Firestore, kept fallback list', err);
   }
 }
 
@@ -231,26 +242,35 @@ const fallbackExperience = [
   },
 ];
 
+function renderExperienceItems(items) {
+  const list = document.getElementById('experienceList');
+  if (!list) return;
+
+  list.innerHTML = items.map(e => `
+    <div class="experience-item">
+      <div class="experience-header">
+        <h3>${escapeHtml(e.role)}</h3>
+        <span class="experience-duration">${escapeHtml(e.duration)}</span>
+      </div>
+      <p class="experience-company">${escapeHtml(e.company)}</p>
+      <p class="experience-desc">${escapeHtml(e.description)}</p>
+    </div>
+  `).join('');
+  observeFadeIns('#experienceList .experience-item');
+}
+
 async function renderExperience() {
   const list = document.getElementById('experienceList');
-  if (!list || !window.PortfolioData) return;
+  if (!list) return;
+
+  renderExperienceItems(fallbackExperience);
+
+  if (!window.PortfolioData) return;
   try {
     const fetched = await window.PortfolioData.fetchExperience();
-    const items = fetched.length ? fetched : fallbackExperience;
-
-    list.innerHTML = items.map(e => `
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3>${escapeHtml(e.role)}</h3>
-          <span class="experience-duration">${escapeHtml(e.duration)}</span>
-        </div>
-        <p class="experience-company">${escapeHtml(e.company)}</p>
-        <p class="experience-desc">${escapeHtml(e.description)}</p>
-      </div>
-    `).join('');
-    observeFadeIns('#experienceList .experience-item');
+    if (fetched.length) renderExperienceItems(fetched);
   } catch (err) {
-    console.error('Failed to load experience', err);
+    console.error('Failed to load experience from Firestore, kept fallback list', err);
   }
 }
 
