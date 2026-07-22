@@ -135,6 +135,7 @@ const fallbackProjects = [
     title: 'AI-Robot Warehouse Simulator',
     description: 'AI-generated robotics simulation depicting autonomous warehouse intralogistics, a robot transporting and shelving packages, produced entirely with AI image and video generation.',
     tags: ['AI Video Generation', 'Robotics Simulation', 'Prompt Engineering'],
+    videoUrl: 'media/ai-robot-warehouse-demo.mp4',
     githubUrl: 'https://github.com/askulkarni029/AI-Robot-Warehouse-Simulator',
   },
   {
