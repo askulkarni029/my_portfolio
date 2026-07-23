@@ -153,16 +153,33 @@ const fallbackProjects = [
     tags: ['Technical Writing', 'AI-Assisted Content', 'Documentation'],
     githubUrl: 'https://github.com/askulkarni029/Technical-Content-Project',
   },
+  {
+    emoji: '🏭',
+    title: 'AI-Powered 3D Industrial Water Treatment System Visualization',
+    description: 'A collection of AI-generated 3D engineering visualizations that simplify industrial water treatment systems — covering ETP, RO, wet scrubber systems, complete plant layouts, and real-world implementation — for technical communication and client presentations.',
+    tags: ['AI 3D Visualization', 'Prompt Engineering', 'Industrial Engineering', 'Canva'],
+    images: [
+      { src: 'media/water-treatment-viz/01-effluent-treatment-plant.jpg', caption: 'Effluent Treatment Plant (ETP) — reaction, settling, filtration, sludge handling & effluent collection' },
+      { src: 'media/water-treatment-viz/02-etp-ro-system.jpg', caption: 'Integrated ETP + RO System — wastewater recycling and water recovery' },
+      { src: 'media/water-treatment-viz/03-wet-scrubber-system.jpg', caption: 'Wet Scrubber System — acid fume extraction and air pollution control' },
+      { src: 'media/water-treatment-viz/04-complete-plant-layout.jpg', caption: 'Complete Water Treatment Plant Layout — ETP, RO, storage tanks, reject management & evaporation' },
+      { src: 'media/water-treatment-viz/05-real-plant-implementation.jpg', caption: 'Real Plant Implementation — AI concept connected to real industrial infrastructure' },
+    ],
+  },
 ];
 
 function renderProjectCards(projects) {
   const grid = document.getElementById('projectsGrid');
   if (!grid) return;
 
-  grid.innerHTML = projects.map(p => `
+  grid.innerHTML = projects.map((p, i) => `
     <div class="project-card">
-      <div class="project-img">
-        <span class="project-emoji">${escapeHtml(p.emoji || '💻')}</span>
+      <div class="project-img ${p.images && p.images.length ? 'has-gallery' : ''}" ${p.images && p.images.length ? `data-project-index="${i}"` : ''}>
+        ${p.images && p.images.length
+          ? `<img class="project-img-cover" src="${escapeHtml(p.images[0].src)}" alt="${escapeHtml(p.title)}" />
+             <span class="project-gallery-badge">🖼️ ${p.images.length} Photos</span>`
+          : `<span class="project-emoji">${escapeHtml(p.emoji || '💻')}</span>`
+        }
       </div>
       <div class="project-info">
         <h3>${escapeHtml(p.title)}</h3>
@@ -173,6 +190,7 @@ function renderProjectCards(projects) {
         <div class="project-links">
           ${p.liveUrl ? `<a href="${escapeHtml(p.liveUrl)}" target="_blank" class="btn btn-sm">Live Demo</a>` : ''}
           ${p.videoUrl ? `<button type="button" class="btn btn-sm btn-video" data-video="${escapeHtml(p.videoUrl)}">▶ Watch Demo</button>` : ''}
+          ${p.images && p.images.length ? `<button type="button" class="btn btn-sm btn-video" data-gallery-index="${i}">🖼️ View Gallery</button>` : ''}
           ${p.githubUrl ? `<a href="${escapeHtml(p.githubUrl)}" target="_blank" class="btn btn-sm btn-ghost">GitHub</a>` : ''}
         </div>
       </div>
@@ -182,6 +200,13 @@ function renderProjectCards(projects) {
 
   grid.querySelectorAll('.btn-video').forEach(btn => {
     btn.addEventListener('click', () => openVideoModal(btn.dataset.video));
+  });
+
+  grid.querySelectorAll('[data-gallery-index]').forEach(btn => {
+    btn.addEventListener('click', () => openGalleryModal(projects[btn.dataset.galleryIndex].images));
+  });
+  grid.querySelectorAll('.project-img[data-project-index]').forEach(el => {
+    el.addEventListener('click', () => openGalleryModal(projects[el.dataset.projectIndex].images));
   });
 }
 
@@ -333,6 +358,65 @@ if (videoOverlay) {
 }
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeVideoModal();
+});
+
+// ── Project image gallery modal ──
+const galleryOverlay = document.getElementById('galleryModalOverlay');
+const galleryImg     = document.getElementById('galleryModalImg');
+const galleryCaption = document.getElementById('galleryCaption');
+const galleryCounter = document.getElementById('galleryCounter');
+const galleryClose   = document.getElementById('galleryModalClose');
+const galleryPrevBtn = document.getElementById('galleryPrev');
+const galleryNextBtn = document.getElementById('galleryNext');
+
+let galleryImages = [];
+let galleryIndex = 0;
+
+function showGalleryImage() {
+  const item = galleryImages[galleryIndex];
+  if (!item) return;
+  galleryImg.src = item.src;
+  galleryImg.alt = item.caption || '';
+  galleryCaption.textContent = item.caption || '';
+  galleryCounter.textContent = `${galleryIndex + 1} / ${galleryImages.length}`;
+}
+
+function openGalleryModal(images) {
+  if (!galleryOverlay || !images || !images.length) return;
+  galleryImages = images;
+  galleryIndex = 0;
+  showGalleryImage();
+  galleryOverlay.classList.add('active');
+}
+
+function closeGalleryModal() {
+  if (!galleryOverlay) return;
+  galleryOverlay.classList.remove('active');
+}
+
+function galleryPrev() {
+  galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
+  showGalleryImage();
+}
+
+function galleryNext() {
+  galleryIndex = (galleryIndex + 1) % galleryImages.length;
+  showGalleryImage();
+}
+
+if (galleryClose) galleryClose.addEventListener('click', closeGalleryModal);
+if (galleryPrevBtn) galleryPrevBtn.addEventListener('click', galleryPrev);
+if (galleryNextBtn) galleryNextBtn.addEventListener('click', galleryNext);
+if (galleryOverlay) {
+  galleryOverlay.addEventListener('click', (e) => {
+    if (e.target === galleryOverlay) closeGalleryModal();
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (!galleryOverlay || !galleryOverlay.classList.contains('active')) return;
+  if (e.key === 'Escape') closeGalleryModal();
+  if (e.key === 'ArrowLeft') galleryPrev();
+  if (e.key === 'ArrowRight') galleryNext();
 });
 
 renderProjects();
