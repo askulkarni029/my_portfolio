@@ -166,6 +166,16 @@ const fallbackProjects = [
       { src: 'media/water-treatment-viz/05-real-plant-implementation.jpg', caption: 'Real Plant Implementation — AI concept connected to real industrial infrastructure' },
     ],
   },
+  {
+    emoji: '📢',
+    title: 'AI-Powered Recruitment Campaign Design',
+    description: 'Designed a complete AI-powered recruitment poster series for multiple job roles at Shreeji Aqua Treatment Pvt. Ltd. The objective was to create visually consistent hiring campaigns that strengthened employer branding while clearly communicating job responsibilities, qualifications, key skills, and company values across digital platforms. By integrating AI-assisted content generation with professional graphic design tools, the project significantly streamlined the creative workflow and improved recruitment marketing efficiency.',
+    tags: ['Canva', 'Adobe Photoshop', 'ChatGPT', 'Recruitment Marketing'],
+    images: [
+      { src: 'media/recruitment-poster-campaign/01-hr-manager-poster.png', caption: 'HR Manager recruitment poster — role requirements, key skills & company overview' },
+      { src: 'media/recruitment-poster-campaign/02-proposal-engineer-poster.png', caption: 'Proposal Engineer recruitment poster — role requirements, key skills & company overview' },
+    ],
+  },
 ];
 
 function renderProjectCards(projects) {
