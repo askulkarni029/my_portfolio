@@ -577,6 +577,15 @@ body {
 .experience-desc {
   color: var(--muted);
   font-size: 0.875rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.experience-desc li {
+  line-height: 1.5;
 }
 
 /* ── TESTIMONIALS ── */

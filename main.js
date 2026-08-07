@@ -235,37 +235,62 @@ const fallbackExperience = [
     role: 'AI Automation Engineer',
     company: 'Shreeji Aqua Treatment Pvt. Ltd.',
     duration: 'Apr 2026 – Present',
-    description: 'Building AI agents, document understanding AI, prompt engineering, AI-powered marketing automation, and AI chatbots to automate business operations end-to-end.',
+    bullets: [
+      'Build smart AI systems that automatically complete business tasks — from reading documents to responding to customers — without needing a person to do it manually.',
+      'Create AI "agents" that can think, decide, and take action on their own — like a digital assistant that handles work automatically.',
+      'Design tools that read and understand documents (like forms, invoices, PDFs) using AI, so data entry becomes automatic instead of manual.',
+      'Write and fine-tune instructions for AI tools so they give more accurate and useful results.',
+      'Build AI-powered marketing tools — like automatically finding good leads, sending personalized messages to customers, and creating marketing designs/content using Canva to save time on campaigns.',
+      'Set up AI chatbots that talk to customers automatically and help with sales or support questions.',
+      'Connect all these AI tools into everyday business processes — cutting down manual work and making operations faster and smoother.',
+    ],
   },
   {
     role: 'Intelligent Automation Specialist',
     company: 'Pradisys Technologies',
     duration: 'Jul 2025 – Dec 2025',
-    description: 'Built reusable RPA workflows for document processing, data entry, and real-time automation, integrating systems with thorough testing for reliability.',
+    bullets: [
+      'Built reliable, reusable automation tools that can handle errors smoothly without breaking down.',
+      'Automated everyday office tasks like data entry, report generation, filling forms, sorting emails, and processing loan documents — saving hours of manual work.',
+      'Used smart tools to pull information from PDFs and websites automatically, and built workflows where AI and humans work together when needed.',
+      'Built a project that could process live/real-time data using AI and take instant action automatically — no waiting, no manual checking.',
+      'Connected different software systems together and tested everything thoroughly to make sure the automation worked correctly and reliably.',
+    ],
   },
   {
     role: 'Automation Engineer',
     company: 'RG Electrical Services',
     duration: 'Jun 2023 – Nov 2025',
-    description: 'Automated solar panel performance monitoring, fault detection, and maintenance/vendor reporting across multiple data sources.',
+    bullets: [
+      "Automatically collected solar panel performance data from various sources (websites, dashboards, weather reports) instead of tracking it by hand — making the data more accurate and saving time.",
+      "Built systems that instantly detect when a solar panel isn't performing well, so problems could be fixed faster.",
+      'Created automated reports and alerts for maintenance and vendor management, reducing delays and errors.',
+    ],
   },
   {
     role: 'Operations Specialist',
     company: 'Peppermint Robotics',
     duration: 'Oct 2021 – Nov 2022',
-    description: 'Deployed, trained, and supported autonomous cleaning robots — installation, troubleshooting, sensors, navigation, and hands-on training.',
+    bullets: [
+      'Set up, trained, and supported autonomous cleaning robots for customers — handling installation, troubleshooting, and hands-on training.',
+      'Worked with robotics technology (sensors, navigation, programming) to keep robots running smoothly.',
+    ],
   },
   {
     role: 'Engineering Trainee',
     company: 'Wikas Printing and Carriers Private Limited',
     duration: 'May 2019 – Aug 2020',
-    description: 'Printing systems, production support, machine maintenance, and quality processes.',
+    bullets: [
+      'Early hands-on experience with industrial automation, technical systems, and equipment maintenance, which built the foundation for the move into AI and automation.',
+    ],
   },
   {
     role: 'Building Management Systems Engineer',
     company: 'Tenon Group',
     duration: 'Sep 2018 – Mar 2019',
-    description: 'Building automation, HVAC controls, diagnostics, and technical documentation.',
+    bullets: [
+      'Early hands-on experience with industrial automation, technical systems, and equipment maintenance, which built the foundation for the move into AI and automation.',
+    ],
   },
 ];
 
@@ -273,16 +298,21 @@ function renderExperienceItems(items) {
   const list = document.getElementById('experienceList');
   if (!list) return;
 
-  list.innerHTML = items.map(e => `
+  list.innerHTML = items.map(e => {
+    const bullets = Array.isArray(e.bullets) ? e.bullets : (e.description ? [e.description] : []);
+    return `
     <div class="experience-item">
       <div class="experience-header">
         <h3>${escapeHtml(e.role)}</h3>
         <span class="experience-duration">${escapeHtml(e.duration)}</span>
       </div>
       <p class="experience-company">${escapeHtml(e.company)}</p>
-      <p class="experience-desc">${escapeHtml(e.description)}</p>
+      <ul class="experience-desc">
+        ${bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}
+      </ul>
     </div>
-  `).join('');
+  `;
+  }).join('');
   observeFadeIns('#experienceList .experience-item');
 }
 
