@@ -182,6 +182,7 @@ const fallbackProjects = [
     description: 'A conversational AI agent that fetches the latest tech/AI news on request and can email a summary to the user, built entirely as a no-code automation workflow. A user chat message triggers an AI Agent node that decides which tool to call and drafts a response; on a follow-up request, the agent emails the news summary via Gmail. n8n handles orchestration, OpenAI handles language understanding/generation, and News API/RSS plus Gmail act as the agent\'s tools for fetching and delivering information.',
     tags: ['n8n', 'AI Agent', 'OpenAI', 'No-Code Automation', 'Gmail API'],
     videoUrl: 'media/n8n-ai-news-agent-demo.mp4',
+    githubUrl: 'https://github.com/askulkarni029/AI-News-Agent-n8n',
   },
 ];
 
