@@ -333,9 +333,10 @@ body {
 
 .tools-category-head {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 1rem;
+  gap: 0.9rem;
+  margin-bottom: 0.85rem;
 }
 
 .tools-category:last-child .tools-tags {
@@ -343,28 +344,36 @@ body {
 }
 
 .tools-category-icon {
-  flex-shrink: 0;
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--primary) 15%, transparent);
-  font-size: 1.35rem;
+  border-radius: 50%;
+  background: rgba(108, 99, 255, 0.16);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.tools-category-body {
+  min-width: 0;
 }
 
 .tools-category-title {
   font-size: 1rem;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 0.25rem;
+  line-height: 1.3;
+  margin-bottom: 0.3rem;
 }
 
 .tools-category-desc {
   font-size: 0.85rem;
   color: var(--muted);
   line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .tools-tags {
