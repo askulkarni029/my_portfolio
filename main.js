@@ -186,6 +186,26 @@ const fallbackProjects = [
   },
 ];
 
+// Network blips on static hosting can cause an <img>/<video> request to
+// fail (ERR_CONNECTION_RESET, timeouts, etc.) even though the file is fine.
+// Browsers don't retry failed media loads automatically, so without this a
+// single hiccup leaves a permanently broken thumbnail/video for the visitor.
+// This retries with backoff, then calls onGiveUp() once retries are exhausted.
+function attachMediaRetry(el, { attr = 'src', maxRetries = 2, baseDelay = 900, onGiveUp } = {}) {
+  const originalSrc = el.getAttribute(attr);
+  let attempts = 0;
+  el.addEventListener('error', function handleError() {
+    attempts += 1;
+    if (attempts <= maxRetries) {
+      setTimeout(() => {
+        el.setAttribute(attr, `${originalSrc}${originalSrc.includes('?') ? '&' : '?'}retry=${Date.now()}`);
+      }, baseDelay * attempts);
+    } else if (onGiveUp) {
+      onGiveUp(el);
+    }
+  });
+}
+
 function renderProjectCards(projects) {
   const grid = document.getElementById('projectsGrid');
   if (!grid) return;
@@ -194,7 +214,8 @@ function renderProjectCards(projects) {
     <div class="project-card">
       <div class="project-img ${p.images && p.images.length ? 'has-gallery' : ''}" ${p.images && p.images.length ? `data-project-index="${i}"` : ''}>
         ${p.images && p.images.length
-          ? `<img class="project-img-cover" src="${escapeHtml(p.images[0].src)}" alt="${escapeHtml(p.title)}" />
+          ? `<img class="project-img-cover" src="${escapeHtml(p.images[0].src)}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async" />
+             <span class="project-emoji project-img-fallback" style="display:none">${escapeHtml(p.emoji || '🖼️')}</span>
              <span class="project-gallery-badge">🖼️ ${p.images.length} Photos</span>`
           : `<span class="project-emoji">${escapeHtml(p.emoji || '💻')}</span>`
         }
@@ -215,6 +236,16 @@ function renderProjectCards(projects) {
     </div>
   `).join('');
   observeFadeIns('#projectsGrid .project-card');
+
+  grid.querySelectorAll('.project-img-cover').forEach(img => {
+    attachMediaRetry(img, {
+      onGiveUp: () => {
+        img.style.display = 'none';
+        const fallback = img.parentElement.querySelector('.project-img-fallback');
+        if (fallback) fallback.style.display = 'flex';
+      },
+    });
+  });
 
   grid.querySelectorAll('.btn-video').forEach(btn => {
     btn.addEventListener('click', () => openVideoModal(btn.dataset.video));
@@ -383,8 +414,14 @@ const videoOverlay = document.getElementById('videoModalOverlay');
 const videoPlayer   = document.getElementById('videoModalPlayer');
 const videoClose    = document.getElementById('videoModalClose');
 
+let videoRetryAttempts = 0;
+const videoMaxRetries = 2;
+
 function openVideoModal(src) {
   if (!videoOverlay || !videoPlayer) return;
+  videoRetryAttempts = 0;
+  videoOverlay.classList.remove('video-modal-error');
+  videoPlayer.dataset.currentSrc = src;
   videoPlayer.src = src;
   videoOverlay.classList.add('active');
   videoPlayer.play().catch(() => {});
@@ -395,7 +432,26 @@ function closeVideoModal() {
   videoPlayer.pause();
   videoPlayer.removeAttribute('src');
   videoPlayer.load();
-  videoOverlay.classList.remove('active');
+  videoOverlay.classList.remove('active', 'video-modal-error');
+}
+
+if (videoPlayer) {
+  // A large file on a slow/flaky connection can fail mid-stream
+  // (connection reset, timeout). Retry a couple of times with backoff
+  // before telling the visitor it couldn't load.
+  videoPlayer.addEventListener('error', () => {
+    const src = videoPlayer.dataset.currentSrc || videoPlayer.getAttribute('src');
+    if (!src) return;
+    videoRetryAttempts += 1;
+    if (videoRetryAttempts <= videoMaxRetries) {
+      setTimeout(() => {
+        videoPlayer.src = src;
+        videoPlayer.play().catch(() => {});
+      }, 900 * videoRetryAttempts);
+    } else {
+      videoOverlay.classList.add('video-modal-error');
+    }
+  });
 }
 
 if (videoClose) videoClose.addEventListener('click', closeVideoModal);
@@ -403,6 +459,18 @@ if (videoOverlay) {
   videoOverlay.addEventListener('click', (e) => {
     if (e.target === videoOverlay) closeVideoModal();
   });
+  const retryBtn = document.getElementById('videoModalRetry');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      videoRetryAttempts = 0;
+      videoOverlay.classList.remove('video-modal-error');
+      const src = videoPlayer.dataset.currentSrc;
+      if (src) {
+        videoPlayer.src = src;
+        videoPlayer.play().catch(() => {});
+      }
+    });
+  }
 }
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeVideoModal();
@@ -419,10 +487,41 @@ const galleryNextBtn = document.getElementById('galleryNext');
 
 let galleryImages = [];
 let galleryIndex = 0;
+let galleryRetryAttempts = 0;
+const galleryMaxRetries = 2;
+
+if (galleryImg) {
+  // Same transient-network protection as the project cover images: retry a
+  // failed load a couple of times before telling the visitor.
+  galleryImg.addEventListener('error', () => {
+    const src = galleryImg.dataset.currentSrc;
+    if (!src) return;
+    galleryRetryAttempts += 1;
+    if (galleryRetryAttempts <= galleryMaxRetries) {
+      setTimeout(() => {
+        galleryImg.src = `${src}${src.includes('?') ? '&' : '?'}retry=${Date.now()}`;
+      }, 900 * galleryRetryAttempts);
+    } else if (galleryCaption) {
+      galleryCaption.textContent = "Couldn't load this image — tap to retry.";
+      galleryCaption.classList.add('gallery-caption-error');
+      galleryImg.style.cursor = 'pointer';
+      galleryImg.addEventListener('click', function retryClick() {
+        galleryRetryAttempts = 0;
+        galleryCaption.classList.remove('gallery-caption-error');
+        galleryImg.style.cursor = '';
+        galleryImg.src = `${src}?retry=${Date.now()}`;
+        galleryImg.removeEventListener('click', retryClick);
+      }, { once: true });
+    }
+  });
+}
 
 function showGalleryImage() {
   const item = galleryImages[galleryIndex];
   if (!item) return;
+  galleryRetryAttempts = 0;
+  if (galleryCaption) galleryCaption.classList.remove('gallery-caption-error');
+  galleryImg.dataset.currentSrc = item.src;
   galleryImg.src = item.src;
   galleryImg.alt = item.caption || '';
   galleryCaption.textContent = item.caption || '';

@@ -273,6 +273,10 @@
     <div class="video-modal">
       <button class="video-modal-close" id="videoModalClose" aria-label="Close">&times;</button>
       <video id="videoModalPlayer" controls playsinline></video>
+      <div class="video-modal-error-state">
+        <p>Couldn't load the video &mdash; your connection may have dropped mid-way.</p>
+        <button type="button" class="btn btn-sm" id="videoModalRetry">Retry</button>
+      </div>
     </div>
   </div>
 

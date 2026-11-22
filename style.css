@@ -527,6 +527,21 @@ body {
 }
 .video-modal-close:hover { color: var(--primary); }
 
+.video-modal-error-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: #000;
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+
+.video-modal-overlay.video-modal-error video { display: none; }
+.video-modal-overlay.video-modal-error .video-modal-error-state { display: flex; }
+
 /* ── IMAGE GALLERY MODAL ── */
 .gallery-modal-overlay {
   display: none;
@@ -599,6 +614,12 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   margin-top: 1rem;
+}
+
+.gallery-caption-error {
+  color: #ff8080;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .gallery-counter {
