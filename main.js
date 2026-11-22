@@ -525,7 +525,8 @@ function showGalleryImage() {
   galleryImg.src = item.src;
   galleryImg.alt = item.caption || '';
   galleryCaption.textContent = item.caption || '';
-  galleryCounter.textContent = `${galleryIndex + 1} / ${galleryImages.length}`;
+  const hint = galleryImages.length > 1 ? '  ·  swipe or tap ‹ › to browse' : '';
+  galleryCounter.textContent = `${galleryIndex + 1} / ${galleryImages.length}${hint}`;
 }
 
 function openGalleryModal(images) {
@@ -565,6 +566,23 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') galleryPrev();
   if (e.key === 'ArrowRight') galleryNext();
 });
+
+// Swipe support — the nav arrows are small, so on touch devices let people
+// just swipe the photo left/right to move through the gallery.
+if (galleryImg) {
+  let touchStartX = null;
+  galleryImg.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  galleryImg.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    const swipeThreshold = 40;
+    if (deltaX > swipeThreshold) galleryPrev();
+    else if (deltaX < -swipeThreshold) galleryNext();
+  }, { passive: true });
+}
 
 renderProjects();
 renderExperience();
